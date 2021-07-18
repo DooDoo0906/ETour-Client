@@ -12,3 +12,13 @@
     2. [Class Diagram](https://lucid.app/lucidchart/1078a848-ee0b-440d-9177-f98ae5730026/edit)
     3. [Client Screen Flow](https://lucid.app/lucidchart/72010873-fe22-476a-8a28-9012d268fd30/edit)
     4. [Company Screen Flow](https://lucid.app/lucidchart/71e397ae-d6de-445e-84ea-7b170f070d7a/edit)
+
+3. Some pictures: 
+
+![image](https://user-images.githubusercontent.com/72665227/126063834-3211acab-826f-47ed-a5ac-3c5a873ed79b.png)
+
+![image](https://user-images.githubusercontent.com/72665227/126063846-64b9fc28-a8e9-4ea8-af23-b609daa63ded.png)
+
+![image](https://user-images.githubusercontent.com/72665227/126063876-89b91513-3621-4664-935f-a26c51908019.png)
+
+![image](https://user-images.githubusercontent.com/72665227/126063926-8b601a50-6419-47d0-84f7-d5024f17ec32.png)
