@@ -1,0 +1,163 @@
+﻿@model Client.Models.TourListModel
+@{
+    ViewData["Title"] = "Tours";
+}
+<style>
+    .card-block {
+        font-size: 1em;
+        position: relative;
+        margin: 0;
+        padding: 1em;
+        border: none;
+        border-top: 1px solid rgba(34, 36, 38, .1);
+        box-shadow: none;
+    }
+
+    .card {
+        font-size: 1em;
+        overflow: hidden;
+        padding: 5;
+        border: none;
+        border-radius: .28571429rem;
+        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+        margin-top: 20px;
+    }
+
+    .carousel-indicators li {
+        border-radius: 12px;
+        width: 12px;
+        height: 12px;
+        background-color: #404040;
+    }
+
+    .carousel-indicators li {
+        border-radius: 12px;
+        width: 12px;
+        height: 12px;
+        background-color: #404040;
+    }
+
+    .carousel-indicators .active {
+        background-color: white;
+        max-width: 12px;
+        margin: 0 3px;
+        height: 12px;
+    }
+
+    .carousel-control-prev-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+    }
+
+    .carousel-control-next-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+    }
+
+    .btn {
+        margin-top: auto;
+    }
+
+    .bg-light-blue {
+        background-color: #e9f7fe !important;
+        color: #3184ae;
+        padding: 7px 18px;
+        border-radius: 4px;
+    }
+
+    .bg-light-red {
+        background-color: #ffcccb !important;
+        color: #CC0000 !important;
+        padding: 7px 18px;
+        border-radius: 4px;
+    }
+
+    .bg-light-green {
+        background-color: rgba(40, 167, 69, 0.2) !important;
+        padding: 7px 18px;
+        border-radius: 4px;
+        color: #28a745 !important;
+    }
+
+    img.d-block {
+        width: 100%;
+        height: 17rem;
+    }
+</style>
+
+<div id="parallax" class="d-flex align-items-center justify-content-center" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/forest.jpg');">
+    <h1 class="display-3 text-white">Our Tours</h1>
+</div>
+
+<!--Section: Block Content-->
+<section class="container mb-5">
+
+    <!-- Card Start -->
+    @foreach (var tour in Model.Tours)
+    {
+        <div class="card shadow" asp-controller="Tour">
+            <div class="row ">
+                <!-- Carousel start -->
+                <div class="col-md-5">
+
+                    <div id="carousel-@tour.ID" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @for (int i = 0; i < tour.ImageUrls.Count; i++)
+                            {
+                                <li data-target="#carousel-@tour.ID" data-slide-to="@i" class="@(i == 0? "active": "")"></li>
+                            }
+                        </ol>
+                        <div class="carousel-inner">
+
+                            @for (int i = 0; i < tour.ImageUrls.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0? "active": "")">
+                                    <img class="d-block" src="@tour.ImageUrls[i]" alt="">
+                                </div>
+                            }
+
+                            <a class="carousel-control-prev" href="#carousel-@tour.ID" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-@tour.ID" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of carousel -->
+
+                <div class="col-md-7 px-3">
+                    <div class="card-block px-6">
+
+                        <h4 class="card-title">@tour.Title</h4>
+                        <p class="card-text text-secondary">
+                            @tour.Description.TruncateAtWord(150)
+                        </p>
+                        <div class="d-flex">
+                            <span class="bg-light-blue mr-2">@tour.StartPlace <i class="fas fa-exchange-alt"></i> @tour.Destination</span>
+                            <span class="bg-light-green mr-2">New Addition</span>
+                            <span class="bg-light-red mr-2">Hot Trend</span>
+                        </div>
+                        <br>
+                        <a asp-controller="Trip" asp-action="Index" asp-route-FilterParams.TourID="@tour.ID" class="btn btn-outline-primary">View trips</a>
+                    </div>
+                </div>
+            </div>
+        </div>}
+
+    @if (!Model.Tours.Any())
+    {
+        <div class="w-100 d-flex justify-content-center my-5">
+            <img class="w-50" src="~/images/empty.svg" alt="completed booking illustration" />
+        </div>
+        <p class="text-center text-muted mt-5">Sorry, we could not find any tours for you</p>
+    }
+    @if (Model.Tours.Any())
+    {
+        <div class="my-5">
+            <partial name="_Pagination" model="Model.Tours.PaginationInfo" />
+        </div>
+    }
+
+</section>
